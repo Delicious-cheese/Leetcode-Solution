@@ -1,6 +1,7 @@
 class Solution {
 public:
     int findContentChildren(vector<int>& g, vector<int>& s) {
+        // gn 代表贪心数， sn代表饼干大小
         int gn = g.size();
         int sn = s.size();
         int c = 0;
