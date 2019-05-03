@@ -1,0 +1,47 @@
+// Date: 2019.5.3
+// Author: llric_zhao
+
+
+class Solution {
+public:
+    /*
+        状态：f[i][j] 表示到该点的最大长度
+        转移：f[i][j] = max(f[i][j], dp(a, b, matrix) + 1)  有下一个点
+        初始化：f[i][j] = 1 起始点算一个长度
+    */
+    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+    int res = 0;
+    vector<vector<int>> f;
+    int n, m;
+    
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        if(matrix.empty()) return 0;
+        
+        // 每一个点可能对应一个答案， 需要调用函数求的每一个点的长度
+        n = matrix.size(), m = matrix[0].size();
+        f = vector<vector<int>>(n, vector<int>(m, -1));
+        
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < m; j++)
+                res = max(res, dp(i, j, matrix));
+                
+        return res;
+    }
+    
+    int dp(int x, int y, vector<vector<int>>& matrix)
+    {
+        // 如果是之前遍历过的点直接加上算得的答案，否则直接算本身点个数极客
+        if(f[x][y] != -1) return f[x][y];
+        f[x][y] = 1;
+        
+        for(int i = 0; i < 4; i++)
+        {
+            int a = x + dx[i], b = y + dy[i];
+    
+            if(a >= 0 && a < n && b >= 0 && b < m && matrix[x][y] > matrix[a][b])
+                f[x][y] = max(f[x][y], dp(a, b, matrix) + 1);
+        }
+        
+        return f[x][y];
+    }
+};
