@@ -17,7 +17,7 @@ public:
     int longestIncreasingPath(vector<vector<int>>& matrix) {
         if(matrix.empty()) return 0;
         
-        // 每一个点可能对应一个答案， 需要调用函数求的每一个点的长度
+        // 每一个点可能对应一个长度答案， 需要调用函数计算
         n = matrix.size(), m = matrix[0].size();
         f = vector<vector<int>>(n, vector<int>(m, -1));
         
@@ -30,7 +30,7 @@ public:
     
     int dp(int x, int y, vector<vector<int>>& matrix)
     {
-        // 如果是之前遍历过的点直接加上算得的答案，否则直接算本身点个数极客
+        // 如果是之前遍历过的点加上之前算得的答案
         if(f[x][y] != -1) return f[x][y];
         f[x][y] = 1;
         
