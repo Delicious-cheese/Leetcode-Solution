@@ -1,5 +1,3 @@
-# 为什么使用排序？
-
 # 常用排序算法 （都是从小到大排序）
 
 ## 冒泡排序
@@ -57,6 +55,8 @@ void insertion_sort(int arr[], int n) {
 
 ## 快速排序
 ```c
+// l r 表示下标
+// 随机选取当前区间内任意的数，i从数组的左边开始扫描， j从数组的右边开始扫描，若i对应的数大于j对应的数，就交换，否则扫描下一个数
 void quick_sort(int a[], int l, int r)
 {
     if(l >= r) return;
@@ -79,19 +79,27 @@ void quick_sort(int a[], int l, int r)
 
 ## 归并排序
 ```c
-void quick_sort(int a[], int l, int r)
+// l r 表示当前数组区间的下标
+// 取数组的中点， 将数组分为两部分，将小的数存在前面
+void merge_sort(int a[], int l, int r)
 {
     if(l >= r) return;
-    int i = l - 1, j = r + 1, x = a[l];
-    while(i < j)
+    int mid = l + r >> 1;
+    merge_sort(a, l, mid), merge_sort(a,  mid + 1, r);
+    
+    int i = l, j = mid + 1, k = 0;
+    
+    while(i <= mid && j <= r)
     {
-        do i++; while(a[i] < x);
-        do j--; while(a[j] > x);
-        if(i < j) swap(a[i], a[j]);
+        if(a[i]  <=  a[j]) t[k++] = a[i++];
+        else t[k++] = a[j++];
     }
-
-    quick_sort(a, l, j);
-    quick_sort(a, j + 1, r);
+    
+    while(i <= mid) t[k++] = a[i++];
+    while(j <= r) t[k++] = a[j++];
+    
+    for(int i = l, j = 0; i <= r; i++, j++)
+        a[i] = t[j];
 }
 
 ```
